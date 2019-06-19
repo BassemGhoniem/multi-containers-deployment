@@ -14,7 +14,10 @@ after_success:
   - docker build -t bassemghoniem/multi-server ./server
   - docker build -t bassemghoniem/multi-worker ./worker
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
-  - docker push bassemghoniem/multi-client bassemghoniem/multi-nginx bassemghoniem/multi-server bassemghoniem/multi-worker
+  - docker push bassemghoniem/multi-client
+  - docker push bassemghoniem/multi-nginx
+  - docker push bassemghoniem/multi-server
+  - docker push bassemghoniem/multi-worker
 
 # deploy:
 #   provider: elasticbeanstalk
