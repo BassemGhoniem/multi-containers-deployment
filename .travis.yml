@@ -1,0 +1,30 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t bassemghoniem/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true bassemghoniem/react-test npm run test
+
+after_success:
+  - docker build -t bassemghoniem/multi-client ./client
+  - docker build -t bassemghoniem/multi-nginx ./nginx
+  - docker build -t bassemghoniem/multi-server ./server
+  - docker build -t bassemghoniem/multi-worker ./worker
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - docker push bassemghoniem/multi-client bassemghoniem/multi-nginx bassemghoniem/multi-server bassemghoniem/multi-worker
+
+# deploy:
+#   provider: elasticbeanstalk
+#   region: "us-east-2"
+#   app: "dockerized-react"
+#   env: "DockerizedReact-env"
+#   bucket_name: "elasticbeanstalk-us-east-2-471358053311"
+#   bucker_path: "dockerized-react"
+#   on:
+#     branch: master
+#   access_key_id: "$AWS_ACCESS_KEY"
+#   secret_access_key:
+#     secure: "$AWS_SECRET_KEY"
