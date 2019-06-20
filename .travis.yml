@@ -19,15 +19,15 @@ after_success:
   - docker push bassemghoniem/multi-worker
   - docker push bassemghoniem/multi-react
 
-# deploy:
-#   provider: elasticbeanstalk
-#   region: "us-east-2"
-#   app: "dockerized-react"
-#   env: "DockerizedReact-env"
-#   bucket_name: "elasticbeanstalk-us-east-2-471358053311"
-#   bucker_path: "dockerized-react"
-#   on:
-#     branch: master
-#   access_key_id: "$AWS_ACCESS_KEY"
-#   secret_access_key:
-#     secure: "$AWS_SECRET_KEY"
+deploy:
+  provider: elasticbeanstalk
+  region: "us-east-2"
+  app: "multi-docker"
+  env: "MultiDocker-env"
+  bucket_name: "elasticbeanstalk-us-east-2-471358053311"
+  bucker_path: "multi-docker"
+  on:
+    branch: master
+  access_key_id: "$AWS_ACCESS_KEY"
+  secret_access_key:
+    secure: "$AWS_SECRET_KEY"
